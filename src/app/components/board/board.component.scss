@@ -1,9 +1,28 @@
 .board {
   width: 400px;
   height: 400px;
-  background-color: #dfdfdf;
-  border-radius: 5px;
-  border: 2px solid #b7b7b7;
+  background-color: #5664df;
   margin: auto;
-  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #3b4192;
+}
+
+td, tr {
+  padding: 0px !important;
+  border-spacing: 0px !important;
+}
+
+table {
+  padding: 20px !important;
+  border-spacing: 0px !important;
+}
+
+.mat-toolbar {
+  background-color: #5664df;
+  color: white;
+}
+
+.board-title {
+  font-weight: normal;
+  font-size: larger;
 }

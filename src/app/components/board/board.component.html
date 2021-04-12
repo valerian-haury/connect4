@@ -1,12 +1,17 @@
+<p>
+  <mat-toolbar>
+    <span class="board-title">Connect 4</span>
+  </mat-toolbar>
+</p>
+
 <table class="board">
   <tbody>
   <tr *ngFor="let row of board; let x = index">
     <td *ngFor="let cell of row; let y = index">
-      <app-cell location="{{x}},{{y}}--{{cell}}" [owned]="cell"></app-cell>
+      <app-cell infos="{{x}},{{y}}--{{cell}}" [position]="{x:x, y:y}" [owned]="cell" (cellClickHandle)="handleCellClick($event)"></app-cell>
     </td>
   </tr>
   </tbody>
 </table>
-<button (click)="setCell(0,0,2)" >test</button>
 
 
