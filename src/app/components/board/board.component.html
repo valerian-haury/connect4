@@ -1,0 +1,12 @@
+<table class="board">
+  <tbody>
+  <tr *ngFor="let row of board; let x = index">
+    <td *ngFor="let cell of row; let y = index">
+      <app-cell location="{{x}},{{y}}--{{cell}}" [owned]="cell"></app-cell>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<button (click)="setCell(0,0,2)" >test</button>
+
+
