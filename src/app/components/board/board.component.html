@@ -1,17 +1,28 @@
-<p>
+<p class="app-bar">
   <mat-toolbar>
-    <span class="board-title">Connect 4</span>
+    <span class="board-title"><span class="big-title"> Connect 4</span> by Valérian Haury</span>
   </mat-toolbar>
 </p>
 
-<table class="board">
-  <tbody>
-  <tr *ngFor="let row of board; let x = index">
-    <td *ngFor="let cell of row; let y = index">
-      <app-cell infos="{{x}},{{y}}--{{cell}}" [position]="{x:x, y:y}" [owned]="cell" (cellClickHandle)="handleCellClick($event)"></app-cell>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="game-container">
+  <table class="board">
+    <tbody>
+    <tr *ngFor="let row of board; let x = index">
+      <td *ngFor="let cell of row; let y = index">
+        <app-cell infos="{{x}},{{y}}--{{cell}}" [position]="{x:x, y:y}" [owned]="cell"
+                  (cellClickHandle)="handleCellClick($event)"></app-cell>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="subsection">
+    <div class="subsection-player-turn">
+      <h1 *ngIf="currentPlayer === 1 && !finished" class="p1">Tour du joueur 1</h1>
+      <h1 *ngIf="currentPlayer === 2 && !finished" class="p2">Tour du joueur 2</h1>
+      <h1 *ngIf="finished && winner === 1" class="p1">Victoire du joueur 1 !</h1>
+      <h1 *ngIf="finished && winner === 2" class="p2">Victoire du joueur 2 !</h1>
+    </div>
+  </div>
+</div>
 
 

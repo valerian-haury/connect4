@@ -1,8 +1,13 @@
+.game-container {
+  width: 100%;
+  margin-top: 50px;
+}
+
 .board {
-  width: 400px;
-  height: 400px;
-  background-color: #5664df;
   margin: auto;
+  max-width: 400px;
+  max-height: 400px;
+  background-color: #5664df;
   border-radius: 5px;
   border: 1px solid #3b4192;
 }
@@ -23,6 +28,34 @@ table {
 }
 
 .board-title {
+  padding: 0 10px;
   font-weight: normal;
-  font-size: larger;
+  font-size: 15px;
+}
+
+.big-title {
+  font-size: 30px;
+  padding-right: 6px;
+}
+
+.subsection {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.subsection-player-turn {
+
+  & h1 {
+    font-size: 30px;
+    font-weight: bold;
+  }}
+
+
+.p1 {
+  color: #E04058;
+}
+
+.p2 {
+  color: #DAA94B;
 }
