@@ -12,6 +12,26 @@
   border: 1px solid #3b4192;
 }
 
+.arrows-container {
+  margin: auto;
+  width: 515px;
+  display: flex;
+  justify-content: center;
+
+  & td {
+    width: 68px;
+    min-width: 68px;
+    padding: 4px;
+    text-align: center;
+  }
+
+  & .mat-icon {
+    font-size: 45px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
 td, tr {
   padding: 0px !important;
   border-spacing: 0px !important;
@@ -45,11 +65,12 @@ table {
 }
 
 .subsection-player-turn {
-
+  text-align: center;
   & h1 {
     font-size: 30px;
     font-weight: bold;
-  }}
+  }
+}
 
 
 .p1 {
@@ -58,4 +79,16 @@ table {
 
 .p2 {
   color: #DAA94B;
+}
+
+.draw {
+  color: #373737;
+}
+
+.subsection-reload-button {
+  width: 100%;
+  max-width: 250px;
+  background-color: #5664df;
+  color: white;
+  font-size: 18px;
 }

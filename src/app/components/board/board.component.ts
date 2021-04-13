@@ -1,5 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Position} from '../../models/position';
+import { fromEvent, Observable, Subscription } from 'rxjs';
+
+const ROW = 7;
+const COLUMN = 8;
+const COLUMN_WIDTH = 68; // DO NOT CHANGE THIS VALUE.
+const BOARD_WIDTH = COLUMN_WIDTH * COLUMN;
+const MAX_TURN = 42;
+
 
 @Component({
   selector: 'app-board',
@@ -7,35 +15,72 @@ import {Position} from '../../models/position';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-
   board: number[][] = [];
   currentPlayer = 1;
   finished = false;
   winner = 0;
+  turn = 0;
+  event: any;
+  mouseX = -1;
+  mouseY = -1;
+  arrowDisplayArray = [0, 0, 0, 1, 0, 0, 0];
+  startXBoardPos = 0;
+  endXBoardPos = 0;
+  resizeObservable$: Observable<Event> | undefined;
+  resizeSubscription$: Subscription | undefined;
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.updateScreenBoardPos();
+    this.resizeObservable$ = fromEvent(window, 'resize');
+    this.resizeSubscription$ = this.resizeObservable$.subscribe( evt => {
+      this.updateScreenBoardPos();
+    });
     this.newGame();
   }
 
+  ngOnDestroy(): void {
+    // @ts-ignore
+    this.resizeSubscription$.unsubscribe();
+  }
+
+  updateScreenBoardPos(): void {
+    this.startXBoardPos = (window.innerWidth / 2) - (BOARD_WIDTH / 2);
+    this.endXBoardPos = (window.innerWidth / 2) + (BOARD_WIDTH / 2);
+    console.log('board left pos: ' + this.startXBoardPos);
+    console.log('board right pos: ' + this.endXBoardPos);
+  }
+
   newGame(): void {
-    this.board = [
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-    ];
+
+    const tempBoard = [];
+    for(let i = 0; i < ROW; i++) {tempBoard.push(this.initArray(COLUMN))}
+    this.board = tempBoard;
+
+
+
     this.currentPlayer = 1;
     this.finished = false;
     this.winner = 0;
+    this.turn = 1;
+  }
+
+  initArray(length: number): number[] {
+    let arr = [], i = 0;
+    arr.length = length;
+    while (i < length) { arr[i++] = 0; }
+    return arr;
   }
 
   nextTurn(): void {
-    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    if (this.turn >= MAX_TURN ) {
+      this.win(3); // DRAW
+    } else {
+      this.turn++;
+      this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    }
   }
 
   win(player: number): void {
@@ -76,7 +121,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  areFourConnected(player: number): boolean { // https://stackoverflow.com/questions/32770321/connect-4-check-for-a-win-algorithm
+  areFourConnected(player: number): boolean {
     // horizontalCheck
     for (let i = 0; i < this.board.length; i++) {
       for (let j = 0; j < this.board[0].length - 3; j++) {
@@ -113,4 +158,33 @@ export class BoardComponent implements OnInit {
 
     return false;
   }
+
+  coordinates(event: MouseEvent): void {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    const arrowIndex = this.getArrowArrayIndexByXPosition(this.mouseX);
+    if (arrowIndex <= 0) {
+      this.updateArrowArray(0);
+    }
+    else if (arrowIndex >= COLUMN) {
+      this.updateArrowArray(COLUMN - 1);
+    }
+    else {
+      this.updateArrowArray(arrowIndex);
+    }
+  }
+
+  updateArrowArray(i: number): void {
+    const tempArray = [0, 0, 0, 0, 0, 0, 0];
+    tempArray[i] = 1;
+    this.arrowDisplayArray = tempArray;
+  }
+
+  getArrowArrayIndexByXPosition(x: number): number {
+    const contextArea = this.endXBoardPos - this.startXBoardPos;
+    const normalizedPos = (x - this.startXBoardPos) / contextArea * 100;
+    const index = normalizedPos / (100 / COLUMN);
+    return Math.round(index - 0.5);
+  }
+
 }

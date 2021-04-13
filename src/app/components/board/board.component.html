@@ -4,7 +4,14 @@
   </mat-toolbar>
 </p>
 
-<div class="game-container">
+<div class="game-container" (mousemove)="coordinates($event)">
+  <div class="arrows-container">
+    <tr>
+      <td *ngFor="let cell of this.board[0]; let i = index">
+        <mat-icon *ngIf="arrowDisplayArray[i]" aria-hidden="false" aria-label="arrow down">keyboard_arrow_down</mat-icon>
+      </td>
+    </tr>
+  </div>
   <table class="board">
     <tbody>
     <tr *ngFor="let row of board; let x = index">
@@ -21,8 +28,14 @@
       <h1 *ngIf="currentPlayer === 2 && !finished" class="p2">Tour du joueur 2</h1>
       <h1 *ngIf="finished && winner === 1" class="p1">Victoire du joueur 1 !</h1>
       <h1 *ngIf="finished && winner === 2" class="p2">Victoire du joueur 2 !</h1>
+      <h1 *ngIf="finished && winner === 3" class="draw">Égalité !</h1>
+      <button class="subsection-reload-button" mat-raised-button (click)="newGame()">
+        <mat-icon aria-hidden="false" aria-label="reload icon">replay</mat-icon>
+        Relancer
+      </button>
     </div>
   </div>
 </div>
+<!--<p>x: {{mouseX}}, y: {{mouseY}}</p>-->
 
 
