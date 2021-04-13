@@ -1,14 +1,40 @@
 <p class="app-bar">
-  <mat-toolbar>
+  <mat-toolbar [color]="primary">
     <span class="board-title"><span class="big-title"> Connect 4</span> by Valérian Haury</span>
+    <span class="example-spacer"></span>
+    <mat-slide-toggle [color]="accent">DARK MODE</mat-slide-toggle>
   </mat-toolbar>
 </p>
 
 <div class="game-container" (mousemove)="coordinates($event)">
+  <div class="turn-spinner-container">
+    <div class="turn-text-container">
+      <span class="turn-text">{{turn}}</span>
+    </div>
+    <mat-progress-spinner
+      class="turn-spinner front"
+      [color]="primary"
+      mode="determinate"
+      [value]="normalizedTurn"
+      diameter="125"
+      strokeWidth="30px"
+    >
+    </mat-progress-spinner>
+    <mat-progress-spinner
+      class="turn-spinner behind"
+      [color]="primary"
+      mode="determinate"
+      value="100"
+      diameter="125"
+      strokeWidth="2"
+    >
+    </mat-progress-spinner>
+  </div>
   <div class="arrows-container">
     <tr>
       <td *ngFor="let cell of this.board[0]; let i = index">
-        <mat-icon *ngIf="arrowDisplayArray[i]" aria-hidden="false" aria-label="arrow down">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="arrowDisplayArray[i]" aria-hidden="false" aria-label="arrow down">keyboard_arrow_down
+        </mat-icon>
       </td>
     </tr>
   </div>
@@ -29,7 +55,7 @@
       <h1 *ngIf="finished && winner === 1" class="p1">Victoire du joueur 1 !</h1>
       <h1 *ngIf="finished && winner === 2" class="p2">Victoire du joueur 2 !</h1>
       <h1 *ngIf="finished && winner === 3" class="draw">Égalité !</h1>
-      <button class="subsection-reload-button" mat-raised-button (click)="newGame()">
+      <button [color]="primary" class="subsection-reload-button" mat-raised-button (click)="newGame()">
         <mat-icon aria-hidden="false" aria-label="reload icon">replay</mat-icon>
         Relancer
       </button>
@@ -37,5 +63,4 @@
   </div>
 </div>
 <!--<p>x: {{mouseX}}, y: {{mouseY}}</p>-->
-
 

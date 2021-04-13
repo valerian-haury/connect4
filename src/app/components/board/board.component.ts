@@ -1,9 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Position} from '../../models/position';
 import { fromEvent, Observable, Subscription } from 'rxjs';
+import {ThemePalette} from '@angular/material/core';
 
-const ROW = 7;
-const COLUMN = 8;
+const ROW = 6;
+const COLUMN = 7;
 const COLUMN_WIDTH = 68; // DO NOT CHANGE THIS VALUE.
 const BOARD_WIDTH = COLUMN_WIDTH * COLUMN;
 const MAX_TURN = 42;
@@ -20,6 +21,7 @@ export class BoardComponent implements OnInit {
   finished = false;
   winner = 0;
   turn = 0;
+  normalizedTurn = 0;
   event: any;
   mouseX = -1;
   mouseY = -1;
@@ -28,6 +30,12 @@ export class BoardComponent implements OnInit {
   endXBoardPos = 0;
   resizeObservable$: Observable<Event> | undefined;
   resizeSubscription$: Subscription | undefined;
+
+  /* THEME */
+  primary: ThemePalette = 'primary';
+  accent: ThemePalette = 'accent';
+  warn: ThemePalette = 'warn';
+
 
   constructor() {
   }
@@ -59,12 +67,11 @@ export class BoardComponent implements OnInit {
     for(let i = 0; i < ROW; i++) {tempBoard.push(this.initArray(COLUMN))}
     this.board = tempBoard;
 
-
-
     this.currentPlayer = 1;
     this.finished = false;
     this.winner = 0;
     this.turn = 1;
+    this.normalizedTurn = 0;
   }
 
   initArray(length: number): number[] {
@@ -79,6 +86,7 @@ export class BoardComponent implements OnInit {
       this.win(3); // DRAW
     } else {
       this.turn++;
+      this.normalizedTurn = this.turn / MAX_TURN * 100;
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
     }
   }

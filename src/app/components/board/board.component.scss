@@ -1,3 +1,4 @@
+
 .game-container {
   width: 100%;
   margin-top: 50px;
@@ -43,8 +44,13 @@ table {
 }
 
 .mat-toolbar {
-  background-color: #5664df;
   color: white;
+  padding: 0 50px;
+
+  & .mat-slide-toggle {
+    font-size: 15px;
+    font-weight: normal;
+  }
 }
 
 .board-title {
@@ -88,7 +94,36 @@ table {
 .subsection-reload-button {
   width: 100%;
   max-width: 250px;
-  background-color: #5664df;
   color: white;
   font-size: 18px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.turn-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  & .mat-progress-spinner {
+
+  }
+}
+
+.turn-text-container {
+  position: absolute;
+  text-align: center;
+
+  & .turn-text {
+    font-size: 30px;
+    font-weight: bold;
+  }
+}
+
+.behind {
+  position: absolute;
+  z-index: 0;
 }
