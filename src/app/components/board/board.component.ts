@@ -1,14 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Position} from '../../models/position';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import {ThemePalette} from '@angular/material/core';
 
-const ROW = 6;
-const COLUMN = 7;
-const COLUMN_WIDTH = 68; // DO NOT CHANGE THIS VALUE.
-const BOARD_WIDTH = COLUMN_WIDTH * COLUMN;
 const MAX_TURN = 42;
-
+const COLUMN_WIDTH = 68; // DO NOT CHANGE THIS VALUE.
 
 @Component({
   selector: 'app-board',
@@ -16,12 +12,16 @@ const MAX_TURN = 42;
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+
+  @Input() row = 0;
+  @Input() column = 0;
+  @Input() currentPlayer = 1;
+  @Input() finished = false;
+  @Output() handleNextTurn = new EventEmitter();
+  @Output() handleWin = new EventEmitter();
+
+  boardWidth = 0;
   board: number[][] = [];
-  currentPlayer = 1;
-  finished = false;
-  winner = 0;
-  turn = 0;
-  normalizedTurn = 0;
   event: any;
   mouseX = -1;
   mouseY = -1;
@@ -41,6 +41,8 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.boardWidth = this.column * COLUMN_WIDTH;
+
     this.updateScreenBoardPos();
     this.resizeObservable$ = fromEvent(window, 'resize');
     this.resizeSubscription$ = this.resizeObservable$.subscribe( evt => {
@@ -54,53 +56,42 @@ export class BoardComponent implements OnInit {
     this.resizeSubscription$.unsubscribe();
   }
 
+  trackByCell(index: number): number {
+    return index;
+  }
+
   updateScreenBoardPos(): void {
-    this.startXBoardPos = (window.innerWidth / 2) - (BOARD_WIDTH / 2);
-    this.endXBoardPos = (window.innerWidth / 2) + (BOARD_WIDTH / 2);
-    console.log('board left pos: ' + this.startXBoardPos);
-    console.log('board right pos: ' + this.endXBoardPos);
+    this.startXBoardPos = (window.innerWidth / 2) - (this.boardWidth / 2);
+    this.endXBoardPos = (window.innerWidth / 2) + (this.boardWidth / 2);
   }
 
   newGame(): void {
-
     const tempBoard = [];
-    for(let i = 0; i < ROW; i++) {tempBoard.push(this.initArray(COLUMN))}
-    this.board = tempBoard;
-
-    this.currentPlayer = 1;
-    this.finished = false;
-    this.winner = 0;
-    this.turn = 1;
-    this.normalizedTurn = 0;
+    for(let i = 0; i < this.row; i++) {tempBoard.push(this.initArray(this.column))}
+    this.board = tempBoard;  // fill the board
   }
 
   initArray(length: number): number[] {
-    let arr = [], i = 0;
+    const arr = [];
+    let i = 0;
     arr.length = length;
     while (i < length) { arr[i++] = 0; }
     return arr;
   }
 
   nextTurn(): void {
-    if (this.turn >= MAX_TURN ) {
-      this.win(3); // DRAW
-    } else {
-      this.turn++;
-      this.normalizedTurn = this.turn / MAX_TURN * 100;
-      this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-    }
+    this.handleNextTurn.emit();
   }
 
-  win(player: number): void {
-    this.finished = true;
-    this.winner = player;
+  win(): void {
+    this.handleWin.emit();
   }
 
   setCell(row: number, column: number, owner: number): void {
     if (row !== -1 || column !== -1) {
       this.board[row][column] = owner;
       if (this.areFourConnected(this.currentPlayer)) {
-        this.win(this.currentPlayer);
+        this.win();
       } else {
         this.nextTurn();
       }
@@ -174,8 +165,8 @@ export class BoardComponent implements OnInit {
     if (arrowIndex <= 0) {
       this.updateArrowArray(0);
     }
-    else if (arrowIndex >= COLUMN) {
-      this.updateArrowArray(COLUMN - 1);
+    else if (arrowIndex >= this.column) {
+      this.updateArrowArray(this.column - 1);
     }
     else {
       this.updateArrowArray(arrowIndex);
@@ -191,7 +182,7 @@ export class BoardComponent implements OnInit {
   getArrowArrayIndexByXPosition(x: number): number {
     const contextArea = this.endXBoardPos - this.startXBoardPos;
     const normalizedPos = (x - this.startXBoardPos) / contextArea * 100;
-    const index = normalizedPos / (100 / COLUMN);
+    const index = normalizedPos / (100 / this.column);
     return Math.round(index - 0.5);
   }
 

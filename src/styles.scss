@@ -4,6 +4,10 @@
 $angular-primary: mat-palette($mat-deep-purple, 500, 100, 900);
 $angular-accent: mat-palette($mat-grey, A200, A100, A400);
 $angular-warn: mat-palette($mat-red);
+$angular-primary-dark: mat-palette($mat-amber, 500, 100, 900);
+$angular-accent-dark: mat-palette($mat-grey, A200, A100, A400);
+$angular-warn-dark: mat-palette($mat-red);
+
 $angular-default-theme: mat-light-theme(
     (
       color: (
@@ -18,9 +22,9 @@ $angular-default-theme: mat-light-theme(
 $angular-dark-theme: mat-dark-theme(
     (
       color: (
-        primary: $angular-primary,
-        accent: $angular-accent,
-        warn: $angular-warn,
+        primary: $angular-primary-dark,
+        accent: $angular-accent-dark,
+        warn: $angular-warn-dark,
       ),
     )
 );

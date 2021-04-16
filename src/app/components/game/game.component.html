@@ -1,0 +1,48 @@
+<div class="game-container">
+  <div class="turn-spinner-container">
+    <div class="turn-text-container">
+      <span class="turn-text">{{turn}}</span>
+    </div>
+    <mat-progress-spinner
+      class="turn-spinner front"
+      [color]="primary"
+      mode="determinate"
+      [value]="normalizedTurn"
+      diameter="125"
+      strokeWidth="30px"
+    >
+    </mat-progress-spinner>
+    <mat-progress-spinner
+      class="turn-spinner behind"
+      [color]="primary"
+      mode="determinate"
+      value="100"
+      diameter="125"
+      strokeWidth="2"
+    >
+    </mat-progress-spinner>
+  </div>
+  <app-board
+    [row]="ROW"
+    [column]="COLUMN"
+    [currentPlayer]="currentPlayer"
+    [finished]="finished"
+    (handleNextTurn)="this.nextTurn()"
+    (handleWin)="win(this.currentPlayer)"
+  >
+  </app-board>
+  <div class="subsection">
+    <div class="subsection-player-turn">
+      <h1 *ngIf="currentPlayer === 1 && !finished" class="p1">Tour du joueur 1</h1>
+      <h1 *ngIf="currentPlayer === 2 && !finished" class="p2">Tour du joueur 2</h1>
+      <h1 *ngIf="finished && winner === 1" class="p1">Victoire du joueur 1 !</h1>
+      <h1 *ngIf="finished && winner === 2" class="p2">Victoire du joueur 2 !</h1>
+      <h1 *ngIf="finished && winner === 3" class="draw">Égalité !</h1>
+      <button [color]="primary" class="subsection-reload-button" mat-raised-button (click)="newGame()">
+        <mat-icon aria-hidden="false" aria-label="reload icon">replay</mat-icon>
+        Relancer
+      </button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,28 @@
+.main {
+  height: 100vh;
+}
+
+.mat-toolbar {
+  color: white;
+  padding: 0 50px;
+
+  & .mat-slide-toggle {
+    font-size: 15px;
+    font-weight: normal;
+  }
+}
+
+.board-title {
+  padding: 0 10px;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.big-title {
+  font-size: 30px;
+  padding-right: 6px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

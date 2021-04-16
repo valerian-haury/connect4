@@ -20,15 +20,6 @@ export class CellComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // tslint:disable-next-line:typedef
-  calculateClasses() {
-    return {
-      empty: this.owned == 0,
-      red: this.owned == 1,
-      yellow: this.owned == 2,
-    };
-  }
-
   cellClicked(): void {
     this.cellClickHandle.emit(this.position.y);
     this.clicked = true;

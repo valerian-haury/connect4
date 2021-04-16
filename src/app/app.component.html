@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<div class="main mat-app-background" [ngClass]="getThemeMode()">
+  <p class="app-bar">
+    <mat-toolbar [color]="primary">
+      <span class="board-title"><span class="big-title"> Connect 4</span> by Valérian Haury</span>
+      <span class="example-spacer"></span>
+      <mat-slide-toggle [color]="accent" [(ngModel)]="isDark" [checked]="isDark">DARK MODE</mat-slide-toggle>
+    </mat-toolbar>
+  </p>
+  <router-outlet></router-outlet>
+</div>

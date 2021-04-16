@@ -1,0 +1,64 @@
+
+.game-container {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.subsection {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.subsection-player-turn {
+  text-align: center;
+  & h1 {
+    font-size: 30px;
+    font-weight: bold;
+  }
+}
+
+.p1 {
+  color: #E04058;
+}
+
+.p2 {
+  color: #DAA94B;
+}
+
+.draw {
+  color: #373737;
+}
+
+.subsection-reload-button {
+  width: 100%;
+  max-width: 250px;
+  color: white;
+  font-size: 18px;
+}
+
+.turn-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  & .mat-progress-spinner {
+
+  }
+}
+
+.turn-text-container {
+  position: absolute;
+  text-align: center;
+
+  & .turn-text {
+    font-size: 30px;
+    font-weight: bold;
+  }
+}
+
+.behind {
+  position: absolute;
+  z-index: 0;
+}

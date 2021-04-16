@@ -1,15 +1,9 @@
-
-.game-container {
-  width: 100%;
-  margin-top: 50px;
-}
-
 .board {
   margin: auto;
   max-width: 400px;
   max-height: 400px;
   background-color: #5664df;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid #3b4192;
 }
 
@@ -41,89 +35,4 @@ td, tr {
 table {
   padding: 20px !important;
   border-spacing: 0px !important;
-}
-
-.mat-toolbar {
-  color: white;
-  padding: 0 50px;
-
-  & .mat-slide-toggle {
-    font-size: 15px;
-    font-weight: normal;
-  }
-}
-
-.board-title {
-  padding: 0 10px;
-  font-weight: normal;
-  font-size: 15px;
-}
-
-.big-title {
-  font-size: 30px;
-  padding-right: 6px;
-}
-
-.subsection {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-}
-
-.subsection-player-turn {
-  text-align: center;
-  & h1 {
-    font-size: 30px;
-    font-weight: bold;
-  }
-}
-
-
-.p1 {
-  color: #E04058;
-}
-
-.p2 {
-  color: #DAA94B;
-}
-
-.draw {
-  color: #373737;
-}
-
-.subsection-reload-button {
-  width: 100%;
-  max-width: 250px;
-  color: white;
-  font-size: 18px;
-}
-
-.example-spacer {
-  flex: 1 1 auto;
-}
-
-.turn-spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-
-  & .mat-progress-spinner {
-
-  }
-}
-
-.turn-text-container {
-  position: absolute;
-  text-align: center;
-
-  & .turn-text {
-    font-size: 30px;
-    font-weight: bold;
-  }
-}
-
-.behind {
-  position: absolute;
-  z-index: 0;
 }

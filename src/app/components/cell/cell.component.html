@@ -1,4 +1,6 @@
 <div class="cell-container" (click)="cellClicked()">
-  <div class="cell-content front" [ngClass]="calculateClasses()"><!--{{infos}}--></div>
+  <div *ngIf="owned === 0" class="cell-content front"></div>
+  <div *ngIf="owned === 1" class="cell-content front drop"><img class="coin-svg" src="assets/svg/red.svg"></div>
+  <div *ngIf="owned === 2" class="cell-content front drop"><img class="coin-svg" src="assets/svg/yellow.svg"></div>
   <div class="cell-content behind empty"></div>
 </div>
